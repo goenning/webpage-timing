@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const MongoClient = require('mongodb').MongoClient;
 
+const origin = process.env.ORIGIN || 'localhost';
 const requestURL = process.env.REQUEST_URL || 'https://example.org';
 const mongoURL = process.env.MONGO_URL;
 
@@ -18,6 +19,8 @@ const mongoURL = process.env.MONGO_URL;
   timing.start = new Date();
   await page.goto(requestURL, { waitUntil: 'networkidle0' });
   timing.end = new Date();
+  timing.origin = origin;
+  timing.request_url = requestURL;
   timing.metrics = await page.metrics();
   timing.entries = JSON.parse(await page.evaluate(() => JSON.stringify(performance.getEntries(), null, "  ")));
   timing.start_ts = timing.start.getTime();

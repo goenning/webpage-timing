@@ -1,13 +1,19 @@
 {
   "name": "webpage-timing",
-  "version": "1.0.0",
-  "description": "",
+  "private": true,
+  "description": "Measure the performance of a webpage by collecting multiple metrics from a real browser",
+  "repository": "https://github.com/goenning/webpage-timing",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "performance",
+    "web",
+    "puppeteer",
+    "docker"
+  ],
+  "author": "Guilherme Oenning <me@goenning.net>",
   "license": "MIT",
   "dependencies": {
     "mongodb": "^3.1.13",

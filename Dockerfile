@@ -39,4 +39,4 @@ WORKDIR /app
 COPY --from=builder /app/node_modules /app/node_modules
 COPY --from=builder /app/index.js /app/index.js
 
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
