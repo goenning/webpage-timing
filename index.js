@@ -1,7 +1,8 @@
 const puppeteer = require('puppeteer');
 const MongoClient = require('mongodb').MongoClient;
+const os = require('os');
 
-const origin = process.env.ORIGIN || 'localhost';
+const origin = process.env.ORIGIN || os.hostname();
 const requestURL = process.env.REQUEST_URL || 'https://example.org';
 const mongoURL = process.env.MONGO_URL;
 
