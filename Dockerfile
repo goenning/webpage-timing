@@ -37,6 +37,7 @@ FROM base AS final
 WORKDIR /app
 
 COPY --from=builder /app/node_modules /app/node_modules
+COPY --from=builder /app/package.json /app/package.json
 COPY --from=builder /app/index.js /app/index.js
 
 CMD ["npm", "start"]
