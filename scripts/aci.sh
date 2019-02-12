@@ -1,5 +1,3 @@
-# Before executing this script, make sure you login with `az login`
-# If you have multiple subscriptions under your account, select one with `az account set --subscription "<YOUR_SUBSCRIPTION NAME>"`
 
 # The name of the resource group to be used on Azure
 resource_group="webtiming-rg"
@@ -20,20 +18,26 @@ fi
 
 if [ $1 == "run" ]
 then
+  rm -rf ./out
+  mkdir ./out
   for loc in "${locations[@]}"
   do
-    for i in {1..20}
-    do
-      status=$(az container show -n $loc-wt-$i --resource-group webtiming-rg --query containers[0].instanceView.currentState.state 2>/dev/null)
-      if [ $? -eq 0 ]
-      then
-        az container start -g $resource_group --name "$loc-wt-$i" &
-        echo "$loc-wt-$i has started..."
-      else
-        az container create -g $resource_group --name "$loc-wt-$i" --image goenning/webpage-timing --cpu 1 --memory 1 --location $loc --restart-policy Never --no-wait --ip-address Private --environment-variables ORIGIN=$loc REQUEST_URL=$request_url --secure-environment-variables MONGO_URL=$mongo_url
-        echo "$loc-wt-$i has been created..."
-      fi
-    done
+    cat ./template.yaml | 
+    sed 's|\$name\$|'$loc'-wt|' | 
+    sed 's|\$request_url\$|'$request_url'|' | 
+    sed 's|\$location\$|'$loc'|' | 
+    sed 's|\$mongo_url\$|'$mongo_url'|' | 
+    sed 's|\$location\$|'$loc'|' > "./out/$loc-wt.yaml"
+
+    status=$(az container show -n $loc-wt --resource-group $resource_group --query containers[0].instanceView.currentState.state 2>/dev/null)
+    if [ $? -eq 0 ]
+    then
+      az container start -g $resource_group --name "$loc-wt" &
+      echo "$loc-wt has started..."
+    else
+      az container create -g $resource_group --location $loc --file "./out/$loc-wt.yaml" --no-wait
+      echo "$loc-wt has been created..."
+    fi
   done
 fi
 
