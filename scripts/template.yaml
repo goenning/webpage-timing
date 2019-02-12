@@ -1,0 +1,78 @@
+apiVersion: 2018-06-01
+type: Microsoft.ContainerInstance/containerGroups
+location: $location$
+name: $name$
+properties:
+  containers:
+  - name: $name$-01
+    properties:
+      image: goenning/webpage-timing
+      environmentVariables:
+        - name: 'ORIGIN'
+          value: '$location$'
+        - name: 'REQUEST_URL'
+          value: '$request_url$'
+        - name: 'MONGO_URL'
+          secureValue: '$mongo_url$'
+      resources:
+        requests:
+          cpu: 0.4
+          memoryInGb: 0.7
+  - name: $name$-02
+    properties:
+      image: goenning/webpage-timing
+      environmentVariables:
+        - name: 'ORIGIN'
+          value: '$location$'
+        - name: 'REQUEST_URL'
+          value: '$request_url$'
+        - name: 'MONGO_URL'
+          secureValue: '$mongo_url$'
+      resources:
+        requests:
+          cpu: 0.4
+          memoryInGb: 0.7
+  - name: $name$-03
+    properties:
+      image: goenning/webpage-timing
+      environmentVariables:
+        - name: 'ORIGIN'
+          value: '$location$'
+        - name: 'REQUEST_URL'
+          value: '$request_url$'
+        - name: 'MONGO_URL'
+          secureValue: '$mongo_url$'
+      resources:
+        requests:
+          cpu: 0.4
+          memoryInGb: 0.7
+  - name: $name$-04
+    properties:
+      image: goenning/webpage-timing
+      environmentVariables:
+        - name: 'ORIGIN'
+          value: '$location$'
+        - name: 'REQUEST_URL'
+          value: '$request_url$'
+        - name: 'MONGO_URL'
+          secureValue: '$mongo_url$'
+      resources:
+        requests:
+          cpu: 0.4
+          memoryInGb: 0.7
+  - name: $name$-05
+    properties:
+      image: goenning/webpage-timing
+      environmentVariables:
+        - name: 'ORIGIN'
+          value: '$location$'
+        - name: 'REQUEST_URL'
+          value: '$request_url$'
+        - name: 'MONGO_URL'
+          secureValue: '$mongo_url$'
+      resources:
+        requests:
+          cpu: 0.4
+          memoryInGb: 0.7
+  osType: Linux
+  restartPolicy: OnFailure
